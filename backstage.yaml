@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      serviceAccountName: backstage-service-account
+      containers:
+        - name: backstage
+          image: docker.io/jhivandb/backstage:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 7007
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  selector:
+    app: backstage
+  ports:
+    - name: http
+      port: 80
+      targetPort: 7007
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backstage-service-account
+  namespace: backstage
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backstage-reader
+rules:
+  # Read access to all standard Kubernetes resources
+  - apiGroups: [""]  # Core API group
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps", "extensions", "batch", "networking.k8s.io", "rbac.authorization.k8s.io", "storage.k8s.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+  # Read access to custom resource definitions
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources: ["customresourcedefinitions"]
+    verbs: ["get", "list", "watch"]
+  # If you need all API groups under core.choreo.dev, you could add:
+  - apiGroups: ["core.choreo.dev", "*.core.choreo.dev"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: backstage-reader-binding
+subjects:
+  - kind: ServiceAccount
+    name: backstage-service-account
+    namespace: backstage
+roleRef:
+  kind: ClusterRole
+  name: backstage-reader
+  apiGroup: rbac.authorization.k8s.io

@@ -20,7 +20,7 @@ export async function createProjectListService({
 
   // Initialize Kubernetes client
   const kc = new k8s.KubeConfig();
-  kc.loadFromDefault(); // This will use the default kubeconfig from the environment
+  kc.loadFromDefault();
   const customApi = kc.makeApiClient(k8s.CustomObjectsApi);
 
   // Define the API Group, Version and Resource types

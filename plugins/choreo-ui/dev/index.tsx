@@ -1,9 +1,9 @@
 import React from 'react';
 import { createDevApp } from '@backstage/dev-utils';
-import { choreoUiPlugin, ChoreoUiPage } from '../src/plugin';
+import { choreoPlugin, ChoreoUiPage } from '../src/plugin';
 
 createDevApp()
-  .registerPlugin(choreoUiPlugin)
+  .registerPlugin(choreoPlugin)
   .addPage({
     element: <ChoreoUiPage />,
     title: 'Root Page',

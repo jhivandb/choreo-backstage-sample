@@ -3,7 +3,6 @@ import {
   createBackendPlugin,
 } from '@backstage/backend-plugin-api';
 import { createRouter } from './router';
-import { catalogServiceRef } from '@backstage/plugin-catalog-node/alpha';
 import { createProjectListService } from './services/ProjectListService';
 
 /**
@@ -19,7 +18,6 @@ export const choreoKubernetesPlugin = createBackendPlugin({
         logger: coreServices.logger,
         auth: coreServices.auth,
         httpRouter: coreServices.httpRouter,
-        catalog: catalogServiceRef,
       },
       async init({ logger, httpRouter }) {
         const projectListService = await createProjectListService({

@@ -43,8 +43,6 @@ export async function createProjectListService({
           namespace: request.namespace,
         });
 
-        console.log('Custom Resource:', JSON.stringify(response, null, 2));
-
         // Use a more generic approach
         const items = response.items || [];
 
@@ -62,7 +60,6 @@ export async function createProjectListService({
           uid: item.metadata.uid,
         }));
 
-        logger.info(`Found ${projects.length} projects`);
         return { items: projects };
       } catch (error) {
         logger.error(`Failed to fetch projects: ${error}`);
@@ -92,9 +89,6 @@ export async function createProjectListService({
         if (!project) {
           throw new NotFoundError(`Project not found: ${request.projectName}`);
         }
-
-        // If we have the organization/namespace, we can filter by it
-        const labelSelector = `core.choreo.dev/project=${request.projectName}`;
 
         const response = await customApi.listNamespacedCustomObject({
           group,
@@ -150,7 +144,7 @@ export async function createProjectListService({
         }));
 
         components = components.filter(component => {
-          component.project == request.projectName;
+          return component.project === request.projectName;
         });
 
         logger.info(

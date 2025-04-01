@@ -1,9 +1,3 @@
-import {
-  BackstageCredentials,
-  BackstageUserPrincipal,
-  BackstageServicePrincipal,
-} from '@backstage/backend-plugin-api';
-
 export interface Project {
   name: string;
   displayName: string;

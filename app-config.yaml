@@ -115,12 +115,26 @@ kubernetes:
   clusterLocatorMethods:
     - type: 'config'
       clusters:
-        - url: <your-cluster-url>
-          name: <your-cluster-name>
+        - url: https://127.0.0.1:58336
+          customResources:
+            - group: 'core.choreo.dev'
+              apiVersion: 'v1'
+              plural: 'components'
+          skipTLSVerify: true
+          skipMetricsLookup: true
+          name: kind-choreo
           authProvider: 'serviceAccount'
-          serviceAccountToken: <token> # or leave blank to use the mounted credentials
+          serviceAccountToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IlFqUk01dzVCbGlnY2lYSkNBeXI5UGxhdzBsM1pTRXk0R1FmOEdpTFRMTmsifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzQ0ODg1MTk5LCJpYXQiOjE3NDQ4ODE1OTksImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiM2NjNTBjZjMtZjM3Ni00YjFlLWIxNWItOWNjYjM0NGMwNDA1Iiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJjaG9yZW8tc3lzdGVtIiwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImNob3Jlby1jb250cm9sbGVyLW1hbmFnZXIiLCJ1aWQiOiJlOGMzZTM5ZS1lYzQ0LTRhYjctYTdlOC0yOTMyODdiM2YxOGIifX0sIm5iZiI6MTc0NDg4MTU5OSwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNob3Jlby1zeXN0ZW06Y2hvcmVvLWNvbnRyb2xsZXItbWFuYWdlciJ9.MujF6vkXU-dk1nTkxFvmaDHgmHeMiMAYu6GKH7Ii5NwRKzxmb3C7QAyqxCzBDUgNsB-HTlNwI7wv_XncuMlXd2R4hMsAqVYhoVca57m0pFTpsym65BVgKZIQ-52WMNpid-khCPAn--Xhm2ZRwtxzQ-657DNFk6aUVjHYvMcQQQsYqXOnAS1txqzWP5wOR1POOBpvdOhlo8nu9Jlr4_gkqJw4Vfb34OFbDu8HBEnijAf6LxijlOEhaGIX8j5tsQZ--63cf3qEOo4bMLdyA0NIY9b36g9rZvsBAakkiG2No0NpNjLzndcnDWmREtvT6Karo9BPzWWNw9ku-qOOMC_PVQ
+          # or leave blank to use the mounted credentials
+
 
 # see https://backstage.io/docs/permissions/getting-started for more on the permission framework
 permission:
   # setting this to `false` will disable permissions
   enabled: false
+
+choreoIngestor:
+  enabled: true
+  taskRunner:
+    frequency: 10
+    timeout: 600

@@ -5,5 +5,6 @@ export interface Config {
       frequency: number;
       timeout: number;
     };
+    excludedNamespaces: string[];
   };
 }

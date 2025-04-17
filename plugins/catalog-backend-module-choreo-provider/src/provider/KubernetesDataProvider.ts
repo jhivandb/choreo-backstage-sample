@@ -104,8 +104,8 @@ export class KubernetesDataProvider {
 
       const excludedNamespaces = new Set(
         this.config.getOptionalStringArray(
-          'choreo.components.excludedNamespaces',
-        ) || ['default', 'kube-public', 'kube-system'],
+          'choreoIngestor.excludedNamespaces',
+        ) || ['default', 'kube-public', 'kube-system', 'choreo-system'],
       );
 
       let allFetchedObjects: KubernetesResource[] = [];

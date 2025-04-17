@@ -18,7 +18,7 @@ import yaml from 'js-yaml';
 import pluralize from 'pluralize';
 import { ChoreoPrefix, KubernetesResource } from './types';
 
-export class KubernetesEntityProvider implements EntityProvider {
+export class ChoreoEntityProvider implements EntityProvider {
   private readonly taskRunner: SchedulerServiceTaskRunner;
   private connection?: EntityProviderConnection;
   private readonly logger: LoggerService;
@@ -44,7 +44,7 @@ export class KubernetesEntityProvider implements EntityProvider {
   }
 
   getProviderName(): string {
-    return 'KubernetesEntityProvider';
+    return 'ChoreoEntityProvider';
   }
 
   async connect(connection: EntityProviderConnection): Promise<void> {
@@ -98,10 +98,10 @@ export class KubernetesEntityProvider implements EntityProvider {
           })),
         });
       } else {
-        this.logger.info(`KubernetesEntityProvider Disabled`);
+        this.logger.info(`ChoreoEntityProvider Disabled`);
       }
     } catch (error) {
-      this.logger.error(`Failed to run KubernetesEntityProvider: ${error}`);
+      this.logger.error(`Failed to run ChoreoEntityProvider: ${error}`);
     }
   }
 

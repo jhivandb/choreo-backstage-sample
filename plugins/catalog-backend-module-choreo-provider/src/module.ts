@@ -6,7 +6,7 @@ import {
   catalogServiceRef,
   catalogProcessingExtensionPoint,
 } from '@backstage/plugin-catalog-node/alpha';
-import { KubernetesEntityProvider } from './provider/EntityProvider';
+import { ChoreoEntityProvider } from './provider/EntityProvider';
 
 export const catalogModuleChoreoProvider = createBackendModule({
   pluginId: 'catalog',
@@ -47,7 +47,7 @@ export const catalogModuleChoreoProvider = createBackendModule({
             ),
           },
         });
-        const templateEntityProvider = new KubernetesEntityProvider(
+        const templateEntityProvider = new ChoreoEntityProvider(
           taskRunner,
           logger,
           config,

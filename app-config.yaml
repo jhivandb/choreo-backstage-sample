@@ -77,11 +77,11 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Component, System, API, Resource, Location, Deployment]
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
-    - type: file
-      target: ../../examples/entities.yaml
+    # - type: file
+    #   target: ../../examples/entities.yaml
 
     # Local example template
     - type: file
@@ -124,7 +124,7 @@ kubernetes:
           skipMetricsLookup: true
           name: kind-choreo
           authProvider: 'serviceAccount'
-          serviceAccountToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IlFqUk01dzVCbGlnY2lYSkNBeXI5UGxhdzBsM1pTRXk0R1FmOEdpTFRMTmsifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzQ0ODg1MTk5LCJpYXQiOjE3NDQ4ODE1OTksImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiM2NjNTBjZjMtZjM3Ni00YjFlLWIxNWItOWNjYjM0NGMwNDA1Iiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJjaG9yZW8tc3lzdGVtIiwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImNob3Jlby1jb250cm9sbGVyLW1hbmFnZXIiLCJ1aWQiOiJlOGMzZTM5ZS1lYzQ0LTRhYjctYTdlOC0yOTMyODdiM2YxOGIifX0sIm5iZiI6MTc0NDg4MTU5OSwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNob3Jlby1zeXN0ZW06Y2hvcmVvLWNvbnRyb2xsZXItbWFuYWdlciJ9.MujF6vkXU-dk1nTkxFvmaDHgmHeMiMAYu6GKH7Ii5NwRKzxmb3C7QAyqxCzBDUgNsB-HTlNwI7wv_XncuMlXd2R4hMsAqVYhoVca57m0pFTpsym65BVgKZIQ-52WMNpid-khCPAn--Xhm2ZRwtxzQ-657DNFk6aUVjHYvMcQQQsYqXOnAS1txqzWP5wOR1POOBpvdOhlo8nu9Jlr4_gkqJw4Vfb34OFbDu8HBEnijAf6LxijlOEhaGIX8j5tsQZ--63cf3qEOo4bMLdyA0NIY9b36g9rZvsBAakkiG2No0NpNjLzndcnDWmREtvT6Karo9BPzWWNw9ku-qOOMC_PVQ
+          serviceAccountToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IlFqUk01dzVCbGlnY2lYSkNBeXI5UGxhdzBsM1pTRXk0R1FmOEdpTFRMTmsifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNzQ0OTcyOTMwLCJpYXQiOjE3NDQ5NjkzMzAsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiZmJiZDc3ZTMtZTk3OS00NmQ5LTg1ZDgtZGEwNGU4Y2M3YmJkIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJjaG9yZW8tc3lzdGVtIiwic2VydmljZWFjY291bnQiOnsibmFtZSI6ImNob3Jlby1jb250cm9sbGVyLW1hbmFnZXIiLCJ1aWQiOiJlOGMzZTM5ZS1lYzQ0LTRhYjctYTdlOC0yOTMyODdiM2YxOGIifX0sIm5iZiI6MTc0NDk2OTMzMCwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNob3Jlby1zeXN0ZW06Y2hvcmVvLWNvbnRyb2xsZXItbWFuYWdlciJ9.ao_0EDp23pL-HIvGlVxbJY91liboA965W83gfHEnr32ncydhChLaAxXIEzUmSD3_Ayx4Q-3-lkUZNePGuQblTUvzA_Pw88DaPey5fV93y544LrFyqhC_W1tK66VCYTpr4hYRtv3za-6SlwIqKQgAfAyY0RhnMtXbgBLQ9vCRCWIoji6AK__pqqfzbYQls9OhZsPcdukwn8XYrTdt_gXz-SJPPpb5F87SZBPsbw-Eg1UqzvFvWpTRGnb6Yq9cF7F-PZkBDJdSJuOQSDwz4m0xFHhhkSZIX_FMJPkXiw8IsK329eH6pgPF1a-q0ipP-ay4Egidc_bsrBtq6phzTksW1Q
           # or leave blank to use the mounted credentials
 
 

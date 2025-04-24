@@ -110,13 +110,18 @@ export class ChoreoEntityProvider implements EntityProvider {
       'backstage.io/managed-by-location': `cluster origin: choreo`,
       'backstage.io/managed-by-origin-location': `cluster origin: choreo`,
     };
+    const annotations = project.metadata.annotations || {};
+    const labels = project.metadata.labels || {};
     const systemEntity: Entity = {
       apiVersion: 'backstage.io/v1alpha1',
       kind: 'System',
       metadata: {
         name: project.metadata.name,
+        description: annotations[ChoreoPrefix + 'description'],
         namespace: project.metadata.namespace,
+        tags: [`cluster:${project.clusterName}`, `kind:${project.kind}`],
         annotations: defaultAnnotations,
+        labels: labels,
       },
       spec: {
         owner: 'choreo',
@@ -143,6 +148,7 @@ export class ChoreoEntityProvider implements EntityProvider {
         namespace: component.metadata.namespace,
         tags: [`cluster:${component.clusterName}`, `kind:${component.kind}`],
         annotations: defaultAnnotations,
+        labels: labels,
       },
       spec: {
         type: component.spec.type.toLowerCase(),

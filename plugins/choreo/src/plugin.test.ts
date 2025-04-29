@@ -1,6 +1,6 @@
 import { choreoPlugin } from './plugin';
 
-describe('choreo-ui', () => {
+describe('choreo', () => {
   it('should export plugin', () => {
     expect(choreoPlugin).toBeDefined();
   });

@@ -79,15 +79,14 @@ export class ChoreoEntityProvider implements EntityProvider {
             this.logger.debug(
               `Processing Kubernetes Object: ${JSON.stringify(k8s)}`,
             );
-            if (k8s.kind == 'project') {
+            if (k8s.kind === 'project') {
               return this.translateProjectToEntity(k8s);
-            } else if (k8s.kind == 'component') {
+            } else if (k8s.kind === 'component') {
               return this.translateComponentToEntity(k8s);
             }
             return [];
-          } else {
-            return [];
           }
+          return [];
         });
 
         await this.connection.applyMutation({
@@ -117,7 +116,7 @@ export class ChoreoEntityProvider implements EntityProvider {
       kind: 'System',
       metadata: {
         name: project.metadata.name,
-        description: annotations[ChoreoPrefix + 'description'],
+        description: annotations[`${ChoreoPrefix}description`],
         namespace: project.metadata.namespace,
         tags: [`cluster:${project.clusterName}`, `kind:${project.kind}`],
         annotations: defaultAnnotations,
@@ -143,18 +142,18 @@ export class ChoreoEntityProvider implements EntityProvider {
       kind: 'Component',
       metadata: {
         name: component.metadata.name,
-        title: annotations[ChoreoPrefix + 'display-name'],
-        description: annotations[ChoreoPrefix + 'description'],
+        title: annotations[`${ChoreoPrefix}display-name`],
+        description: annotations[`${ChoreoPrefix}description`],
         namespace: component.metadata.namespace,
         tags: [`cluster:${component.clusterName}`, `kind:${component.kind}`],
         annotations: defaultAnnotations,
         labels: labels,
       },
       spec: {
-        type: component.spec.type.toLowerCase(),
+        type: this.componentTypeMapping(component.spec.type.toLowerCase()),
         lifecycle: 'production',
         owner: 'default',
-        system: labels[ChoreoPrefix + 'project'],
+        system: labels[`${ChoreoPrefix}project`],
         // dependsOn: annotations[`${prefix}/dependsOn`]?.split(','),
         // providesApis: annotations[`${prefix}/providesApis`]?.split(','), //TODO How to we map api relationships
         // consumesApis: annotations[`${prefix}/consumesApis`]?.split(','),
@@ -216,5 +215,15 @@ export class ChoreoEntityProvider implements EntityProvider {
       this.config.getOptionalString('choreoIngestor.annotationPrefix') ||
       'core.choreo.dev'
     );
+  }
+  private componentTypeMapping(s: string): string {
+    switch (s) {
+      case 'service':
+        return 'service';
+      case 'webapplication':
+        return 'website';
+      default:
+        return s;
+    }
   }
 }

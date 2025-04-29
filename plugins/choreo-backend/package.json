@@ -1,5 +1,5 @@
 {
-  "name": "@internal/plugin-choreo-kubernetes-backend",
+  "name": "@internal/plugin-choreo-backend",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -28,7 +28,6 @@
     "@backstage/catalog-client": "^1.9.1",
     "@backstage/errors": "^1.2.7",
     "@backstage/plugin-catalog-node": "^1.16.1",
-    "@kubernetes/client-node": "^1.1.2",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
     "zod": "^3.22.4"

@@ -1,5 +1,5 @@
 {
-  "name": "@internal/plugin-choreo-ui",
+  "name": "@internal/plugin-choreo",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
@@ -24,16 +24,25 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
+    "@backstage/catalog-model": "^1.7.3",
     "@backstage/core-components": "^0.17.0",
     "@backstage/core-plugin-api": "^1.10.5",
+    "@backstage/plugin-catalog-react": "^1.17.0",
     "@backstage/theme": "^0.6.4",
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.61",
+    "@wso2-enterprise/choreo-cell-diagram": "3.2.25040205",
+    "pathfinding": "^0.4.18",
     "react-use": "^17.2.4"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "resolutions": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@backstage/cli": "^0.31.0",
@@ -43,6 +52,7 @@
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.0.0",
+    "@types/pathfinding": "^0",
     "msw": "^1.0.0",
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
   },

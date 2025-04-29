@@ -161,14 +161,13 @@ export class KubernetesDataProvider {
                   objectType.apiVersion === null
                 ) {
                   return {};
-                } else {
-                  return {
-                    ...resource,
-                    apiVersion: `${objectType.group}/${objectType.apiVersion}`,
-                    kind: objectType.plural?.slice(0, -1),
-                    clusterName: cluster.name,
-                  };
                 }
+                return {
+                  ...resource,
+                  apiVersion: `${objectType.group}/${objectType.apiVersion}`,
+                  kind: objectType.plural?.slice(0, -1),
+                  clusterName: cluster.name,
+                };
               }),
           );
 

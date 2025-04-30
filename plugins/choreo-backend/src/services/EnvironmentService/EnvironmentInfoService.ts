@@ -1,5 +1,4 @@
 import {
-  AuthService,
   BackstageCredentials,
   LoggerService,
 } from '@backstage/backend-plugin-api/*';
@@ -9,43 +8,27 @@ import {
   ObjectToFetch,
   choreoWorkflowTypes,
 } from './types';
-import {
-  KubernetesBuilder,
-  KubernetesObjectTypes,
-} from '@backstage/plugin-kubernetes-backend';
+import { KubernetesBuilder } from '@backstage/plugin-kubernetes-backend';
 import { Config } from '@backstage/config';
 import { CatalogApi } from '@backstage/catalog-client';
 import { PermissionEvaluator } from '@backstage/plugin-permission-common';
 import { DiscoveryService } from '@backstage/backend-plugin-api';
 import {
   KubernetesFetcher,
-  ClusterDetails,
   KubernetesClustersSupplier,
 } from '@backstage/plugin-kubernetes-node';
 
 export class EnvironmentInfoService implements EnvironmentService {
   private readonly logger: LoggerService;
-  private readonly config: Config;
-  private readonly catalogApi: CatalogApi;
-  private readonly permissions: PermissionEvaluator;
-  private readonly discovery: DiscoveryService;
   private readonly fetcher: KubernetesFetcher;
   private readonly clusterSupplier: KubernetesClustersSupplier;
 
   private constructor(
     logger: LoggerService,
-    config: Config,
-    catalogApi: CatalogApi,
-    permissions: PermissionEvaluator,
-    discovery: DiscoveryService,
     fetcher: KubernetesFetcher,
     clusterSupplier: KubernetesClustersSupplier,
   ) {
     this.logger = logger;
-    this.config = config;
-    this.catalogApi = catalogApi;
-    this.permissions = permissions;
-    this.discovery = discovery;
     this.fetcher = fetcher;
     this.clusterSupplier = clusterSupplier;
   }
@@ -66,15 +49,7 @@ export class EnvironmentInfoService implements EnvironmentService {
     });
 
     const { fetcher, clusterSupplier } = await builder.build();
-    return new EnvironmentInfoService(
-      logger,
-      config,
-      catalogApi,
-      permissions,
-      discovery,
-      fetcher,
-      clusterSupplier,
-    );
+    return new EnvironmentInfoService(logger, fetcher, clusterSupplier);
   }
 
   async fetchDeploymentInfo(request: {
@@ -141,6 +116,12 @@ export class EnvironmentInfoService implements EnvironmentService {
                 resource.metadata?.labels?.['core.choreo.dev/organization'] ===
                   request.organizationName,
             );
+
+          if (deployment === undefined) {
+            // Skip environments without a deployment
+            continue;
+          }
+
           const endpoint = fetchedObjects.responses
             .filter(response => (response.type = 'customresources'))
             .flatMap(response => response.resources)
@@ -148,7 +129,7 @@ export class EnvironmentInfoService implements EnvironmentService {
               resource =>
                 resource.kind === 'Endpoint' &&
                 resource.metadata?.labels?.['core.choreo.dev/deployment'] ===
-                  deployment.metadata?.name,
+                  deployment.metadata?.name, // Errors when deployment is unavaibale
             ); // TODO There are multiple endpoints
 
           environments.push({

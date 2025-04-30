@@ -31,8 +31,6 @@ export const catalogModuleChoreoProvider = createBackendModule({
         catalogApi,
         permissions,
         discovery,
-        httpAuth,
-        auth,
         scheduler,
       }) {
         const taskRunner = scheduler.createScheduledTaskRunner({

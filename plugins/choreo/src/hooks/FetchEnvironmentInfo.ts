@@ -1,14 +1,6 @@
 import { Entity } from '@backstage/catalog-model/index';
-import { createFetchApi } from '@backstage/core-app-api';
-import {
-  configApiRef,
-  DiscoveryApi,
-  discoveryApiRef,
-  IdentityApi,
-  useApi,
-} from '@backstage/core-plugin-api';
+import { DiscoveryApi, IdentityApi } from '@backstage/core-plugin-api';
 
-const ChoreoPrefix = 'core.choreo.dev/';
 export async function fetchEnvironmentInfo(
   entity: Entity,
   discovery: DiscoveryApi,

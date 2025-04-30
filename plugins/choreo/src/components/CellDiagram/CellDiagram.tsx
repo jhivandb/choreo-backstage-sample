@@ -1,5 +1,4 @@
 import React, { lazy, Suspense } from 'react';
-import { Entity } from '@backstage/catalog-model';
 import {
   Content,
   ContentHeader,
@@ -8,17 +7,7 @@ import {
   Progress,
 } from '@backstage/core-components';
 
-import {
-  CustomTooltips,
-  DiagramLayer,
-  MoreVertMenuItem,
-  Project,
-} from '@wso2-enterprise/choreo-cell-diagram';
 import { sampleProject } from './sampleProject';
-
-interface CellDiagramProps {
-  entity: Entity;
-}
 
 const CellView = lazy(() =>
   import('@wso2-enterprise/choreo-cell-diagram').then(module => ({

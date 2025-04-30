@@ -8,14 +8,7 @@ import { KubernetesDataProvider } from './KubernetesDataProvider';
 import { Config } from '@backstage/config';
 import { CatalogApi } from '@backstage/catalog-client';
 import { PermissionEvaluator } from '@backstage/plugin-permission-common';
-import {
-  LoggerService,
-  DiscoveryService,
-  HttpAuthService,
-  AuthService,
-} from '@backstage/backend-plugin-api';
-import yaml from 'js-yaml';
-import pluralize from 'pluralize';
+import { LoggerService, DiscoveryService } from '@backstage/backend-plugin-api';
 import { ChoreoPrefix, KubernetesResource } from './types';
 
 export class ChoreoEntityProvider implements EntityProvider {
@@ -162,60 +155,6 @@ export class ChoreoEntityProvider implements EntityProvider {
     return componentEntity;
   }
 
-  private findCommonLabels(resource: any): string | null {
-    const highLevelLabels = resource.metadata.labels || {};
-    const podLabels = resource.spec?.template?.metadata?.labels || {};
-
-    const commonLabels = Object.keys(highLevelLabels).filter(
-      label => podLabels[label],
-    );
-    if (commonLabels.length > 0) {
-      return commonLabels
-        .map(label => `${label}=${highLevelLabels[label]}`)
-        .join(',');
-    } else if (Object.keys(highLevelLabels).length > 0) {
-      return Object.keys(highLevelLabels)
-        .map(label => `${label}=${highLevelLabels[label]}`)
-        .join(',');
-    }
-
-    return null;
-  }
-
-  private extractCustomAnnotations(
-    annotations: Record<string, string>,
-    clusterName: string,
-  ): Record<string, string> {
-    const prefix = this.getAnnotationPrefix();
-    const customAnnotationsKey = `${prefix}/component-annotations`;
-    const defaultAnnotations: Record<string, string> = {
-      'backstage.io/managed-by-location': `cluster origin: ${clusterName}`,
-      'backstage.io/managed-by-origin-location': `cluster origin: ${clusterName}`,
-    };
-
-    if (!annotations[customAnnotationsKey]) {
-      return defaultAnnotations;
-    }
-
-    const customAnnotations = annotations[customAnnotationsKey]
-      .split(',')
-      .reduce((acc, pair) => {
-        const [key, value] = pair.split('=').map(s => s.trim());
-        if (key && value) {
-          acc[key] = value;
-        }
-        return acc;
-      }, defaultAnnotations);
-
-    return customAnnotations;
-  }
-
-  private getAnnotationPrefix(): string {
-    return (
-      this.config.getOptionalString('choreoIngestor.annotationPrefix') ||
-      'core.choreo.dev'
-    );
-  }
   private componentTypeMapping(s: string): string {
     switch (s) {
       case 'service':

@@ -5,7 +5,6 @@ import Router from 'express-promise-router';
 import { EnvironmentInfoService } from './services/EnvironmentService/EnvironmentInfoService';
 
 export async function createRouter({
-  httpAuth,
   environmentInfoService,
 }: {
   httpAuth: HttpAuthService;

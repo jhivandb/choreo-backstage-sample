@@ -42,7 +42,7 @@ export const Environments = () => {
     };
 
     fetchData();
-  });
+  }, []);
   // TODO Add loading state
 
   return (

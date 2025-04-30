@@ -4,7 +4,7 @@ import {
 } from '@backstage/backend-plugin-api';
 import { createRouter } from './router';
 import { catalogServiceRef } from '@backstage/plugin-catalog-node/alpha';
-import { createTodoListService } from './services/TodoListService';
+import { EnvironmentInfoService } from './services/EnvironmentService/EnvironmentInfoService';
 
 /**
  * choreoPlugin backend plugin
@@ -21,20 +21,37 @@ export const choreoPlugin = createBackendPlugin({
         httpAuth: coreServices.httpAuth,
         httpRouter: coreServices.httpRouter,
         catalog: catalogServiceRef,
+        permissions: coreServices.permissions,
+        discovery: coreServices.discovery,
+        config: coreServices.rootConfig,
       },
-      async init({ logger, auth, httpAuth, httpRouter, catalog }) {
-        const todoListService = await createTodoListService({
+      async init({
+        logger,
+        config,
+        httpAuth,
+        httpRouter,
+        catalog,
+        permissions,
+        discovery,
+      }) {
+        const environmentInfoService = await EnvironmentInfoService.create(
           logger,
-          auth,
+          config,
           catalog,
-        });
+          permissions,
+          discovery,
+        );
 
         httpRouter.use(
           await createRouter({
             httpAuth,
-            todoListService,
+            environmentInfoService,
           }),
         );
+        httpRouter.addAuthPolicy({
+          path: '/environments',
+          allow: 'unauthenticated',
+        });
       },
     });
   },

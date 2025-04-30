@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import {
   Content,
@@ -10,6 +10,12 @@ import {
 } from '@backstage/core-components';
 import { Grid, Card, CardContent, Typography, Box } from '@material-ui/core';
 import { StatusOK, StatusError } from '@backstage/core-components';
+import {
+  discoveryApiRef,
+  identityApiRef,
+  useApi,
+} from '@backstage/core-plugin-api';
+import { fetchEnvironmentInfo } from '../../hooks/FetchEnvironmentInfo';
 
 interface Environment {
   name: string;
@@ -25,43 +31,19 @@ interface Environment {
 
 export const Environments = () => {
   const { entity } = useEntity();
+  const [environments, setEnvironmentsData] = useState<Environment[]>([]);
+  const discovery = useApi(discoveryApiRef);
+  const identityApi = useApi(identityApiRef);
 
-  // Mock data - replace with actual data fetching
-  const environments: Environment[] = [
-    {
-      name: 'Development',
-      deployment: {
-        status: 'success',
-        lastDeployed: '2024-03-20T10:00:00Z',
-      },
-      endpoint: {
-        url: 'https://dev-api.example.com',
-        status: 'active',
-      },
-    },
-    {
-      name: 'Staging',
-      deployment: {
-        status: 'failed',
-        lastDeployed: '2024-03-19T15:30:00Z',
-      },
-      endpoint: {
-        url: 'https://staging-api.example.com',
-        status: 'inactive',
-      },
-    },
-    {
-      name: 'Production',
-      deployment: {
-        status: 'failed',
-        lastDeployed: '2024-03-19T15:30:00Z',
-      },
-      endpoint: {
-        url: 'https://staging-api.example.com',
-        status: 'inactive',
-      },
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchEnvironmentInfo(entity, discovery, identityApi);
+      setEnvironmentsData(data as Environment[]);
+    };
+
+    fetchData();
+  }, []);
+  // TODO Add loading state
 
   return (
     <Page themeId="tool">

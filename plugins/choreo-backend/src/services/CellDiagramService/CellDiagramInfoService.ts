@@ -12,15 +12,28 @@ import {
   KubernetesFetcher,
   KubernetesClustersSupplier,
   ObjectToFetch,
+  FetchResponseWrapper,
 } from '@backstage/plugin-kubernetes-node';
 import { Project, Component } from 'choreo-cell-diagram';
 import { cellChoreoWorkflowTypes, CellDiagramService } from '../../types';
 
+/**
+ * Service implementation for fetching and managing Cell Diagram information.
+ * @implements {CellDiagramService}
+ */
 export class CellDiagramInfoService implements CellDiagramService {
   private readonly logger: LoggerService;
   private readonly fetcher: KubernetesFetcher;
   private readonly clusterSupplier: KubernetesClustersSupplier;
 
+  /**
+   * Private constructor for CellDiagramInfoService.
+   * Use the static create method to instantiate.
+   * @param {LoggerService} logger - Logger service instance
+   * @param {KubernetesFetcher} fetcher - Kubernetes fetcher instance
+   * @param {KubernetesClustersSupplier} clusterSupplier - Kubernetes cluster supplier instance
+   * @private
+   */
   private constructor(
     logger: LoggerService,
     fetcher: KubernetesFetcher,
@@ -31,6 +44,16 @@ export class CellDiagramInfoService implements CellDiagramService {
     this.clusterSupplier = clusterSupplier;
   }
 
+  /**
+   * Creates a new instance of CellDiagramInfoService.
+   * @param {LoggerService} logger - Logger service instance
+   * @param {Config} config - Backstage configuration
+   * @param {CatalogApi} catalogApi - Catalog API instance
+   * @param {PermissionEvaluator} permissions - Permission evaluator instance
+   * @param {DiscoveryService} discovery - Discovery service instance
+   * @returns {Promise<CellDiagramService>} A new instance of CellDiagramInfoService
+   * @static
+   */
   static async create(
     logger: LoggerService,
     config: Config,
@@ -50,6 +73,13 @@ export class CellDiagramInfoService implements CellDiagramService {
     return new CellDiagramInfoService(logger, fetcher, clusterSupplier);
   }
 
+  /**
+   * Fetches project information including its components and their configurations.
+   * @param {Object} request - The request object
+   * @param {string} request.projectName - Name of the project to fetch
+   * @param {string} request.organizationName - Name of the organization the project belongs to
+   * @returns {Promise<Project | undefined>} Project information if found, undefined otherwise
+   */
   async fetchProjectInfo(request: {
     projectName: string;
     organizationName: string;
@@ -114,29 +144,54 @@ export class CellDiagramInfoService implements CellDiagramService {
                 request.organizationName,
           );
 
-        const components: Component[] = componentCrds.map(component => ({
-          id: component.metadata?.uid || component.metadata?.name || '',
-          label:
-            component.metadata?.annotations?.['core.choreo.dev/display-name'] ||
-            component.metadata?.name ||
-            '',
-          version: component.metadata?.resourceVersion || '1.0.0',
-          type: component.spec?.type || 'SERVICE',
-          services: {
-            [component.metadata?.name || '']: {
-              id: component.metadata?.name || '',
-              label:
-                component.metadata?.annotations?.[
-                  'core.choreo.dev/display-name'
-                ] ||
-                component.metadata?.name ||
-                '',
-              type: 'REST', // TODO Fetch from endpoint
-              dependencyIds: [],
+        const components: Component[] = componentCrds.map(component => {
+          const endpoint = this.getEndpointForComponent(
+            fetchedObjects,
+            component.metadata.name,
+            request.projectName,
+            request.organizationName,
+          );
+          return {
+            id: component.metadata?.uid || component.metadata?.name || '',
+            label:
+              component.metadata?.annotations?.[
+                'core.choreo.dev/display-name'
+              ] ||
+              component.metadata?.name ||
+              '',
+            version: component.metadata?.resourceVersion || '1.0.0',
+            type: component.spec?.type || 'SERVICE',
+            services: {
+              [component.metadata?.name || '']: {
+                id: component.metadata?.name || '',
+                label:
+                  component.metadata?.annotations?.[
+                    'core.choreo.dev/display-name'
+                  ] ||
+                  component.metadata?.name ||
+                  '',
+                type: endpoint.spec.type,
+                dependencyIds: [],
+                deploymentMetadata: {
+                  gateways: {
+                    internet: {
+                      isExposed: Boolean(
+                        endpoint.spec?.networkVisibilities?.public ?? true,
+                      ),
+                    },
+                    intranet: {
+                      isExposed: Boolean(
+                        endpoint.spec?.networkVisibilities?.organization ??
+                          false,
+                      ),
+                    },
+                  },
+                },
+              },
             },
-          },
-          connections: [],
-        }));
+            connections: [],
+          };
+        });
 
         project = {
           id: projectCrd.metadata?.uid || projectCrd.metadata?.name || '',
@@ -162,5 +217,37 @@ export class CellDiagramInfoService implements CellDiagramService {
     }
 
     return undefined;
+  }
+
+  /**
+   * Retrieves the endpoint configuration for a specific component.
+   * @param {FetchResponseWrapper} crds - The fetched Custom Resource Definitions
+   * @param {string} componentName - Name of the component
+   * @param {string} projectName - Name of the project
+   * @param {string} organizationName - Name of the organization
+   * @returns {any} The endpoint configuration for the component
+   * @private
+   */
+  private getEndpointForComponent(
+    crds: FetchResponseWrapper,
+    componentName: string,
+    projectName: string,
+    organizationName: string,
+  ): any {
+    const endpoint = crds.responses
+      .filter(response => response.type === 'customresources')
+      .flatMap(response => response.resources)
+      .find(
+        resource =>
+          resource.kind === 'Endpoint' &&
+          resource.metadata?.labels?.['core.choreo.dev/project'] ===
+            projectName &&
+          resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+            organizationName &&
+          resource.metadata?.labels?.['core.choreo.dev/component'] ===
+            componentName, // TODO this will find any endpoint not considering environment
+      );
+
+    return endpoint;
   }
 }

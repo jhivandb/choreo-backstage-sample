@@ -24,7 +24,6 @@ export async function getCellDiagramInfo(
   });
 
   backendUrl.search = params.toString();
-  console.log('Request URL:', backendUrl.toString());
 
   const res = await fetch(backendUrl, {
     headers: {

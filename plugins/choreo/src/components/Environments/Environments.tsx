@@ -15,7 +15,7 @@ import {
   identityApiRef,
   useApi,
 } from '@backstage/core-plugin-api';
-import { fetchEnvironmentInfo } from '../../hooks/FetchEnvironmentInfo';
+import { getEnvironmentInfo } from '../../api/getEnvironmentInfo';
 
 interface Environment {
   name: string;
@@ -37,7 +37,7 @@ export const Environments = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchEnvironmentInfo(entity, discovery, identityApi);
+      const data = await getEnvironmentInfo(entity, discovery, identityApi);
       setEnvironmentsData(data as Environment[]);
     };
 

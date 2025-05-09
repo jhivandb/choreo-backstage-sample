@@ -2694,12 +2694,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.27.0, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.6, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.23.9, @babel/runtime@npm:^7.26.10, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.0, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.27.0
   resolution: "@babel/runtime@npm:7.27.0"
   dependencies:
     regenerator-runtime: "npm:^0.14.0"
   checksum: 10c0/35091ea9de48bd7fd26fb177693d64f4d195eb58ab2b142b893b7f3fa0f1d7c677604d36499ae0621a3703f35ba0c6a8f6c572cc8f7dc0317213841e493cf663
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.22.5, @babel/runtime@npm:^7.27.1":
+  version: 7.27.1
+  resolution: "@babel/runtime@npm:7.27.1"
+  checksum: 10c0/530a7332f86ac5a7442250456823a930906911d895c0b743bf1852efc88a20a016ed4cd26d442d0ca40ae6d5448111e02a08dd638a4f1064b47d080e2875dc05
   languageName: node
   linkType: hard
 
@@ -7453,7 +7460,7 @@ __metadata:
     "@testing-library/react": "npm:^14.0.0"
     "@testing-library/user-event": "npm:^14.0.0"
     "@types/pathfinding": "npm:^0"
-    "@wso2-enterprise/choreo-cell-diagram": "npm:3.2.25040205"
+    choreo-cell-diagram: "file:/Users/jhivan/Developer/work/vscode-extensions/workspaces/choreo/cell-diagram"
     msw: "npm:^1.0.0"
     pathfinding: "npm:^0.4.18"
     react: "npm:^16.13.1 || ^17.0.0 || ^18.0.0"
@@ -8942,16 +8949,16 @@ __metadata:
   linkType: hard
 
 "@mui/types@npm:^7.2.4":
-  version: 7.4.1
-  resolution: "@mui/types@npm:7.4.1"
+  version: 7.4.2
+  resolution: "@mui/types@npm:7.4.2"
   dependencies:
-    "@babel/runtime": "npm:^7.27.0"
+    "@babel/runtime": "npm:^7.27.1"
   peerDependencies:
     "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/958a1dd29956b4646058c7bf5615cb5211736568b9997e8baac4698b02189cdfd7aa880fa935c59138dfa9e9163549ca6c509142da28add835abeff3c68d6ccf
+  checksum: 10c0/9401abf306c5c993e7b21136684f80d4aefe28e00d435fccb963611bf009af71dfcf65e509c1db720a0c7d5bf9a364706aa38bd8c0a3b47718aca60f7063aac7
   languageName: node
   linkType: hard
 
@@ -13645,11 +13652,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^18.11.19":
-  version: 18.19.87
-  resolution: "@types/node@npm:18.19.87"
+  version: 18.19.99
+  resolution: "@types/node@npm:18.19.99"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/12b9c83d37a1f202bc8ce70e64ab2c981ebebf9290773ce371a60214406bf3e5278b807e4ada8198873c28afba88d23bf106f3cbaccd0f5ebe24daf9cfe096e3
+  checksum: 10c0/469450ac2583246d6608c2c4fc23ce027402ae6b23484970d9bd024d50d5731ec6440712d887dc2c8a20ee640e0972c6cf8fbae8b40ae97cb641ddab63f05a88
   languageName: node
   linkType: hard
 
@@ -14503,33 +14510,6 @@ __metadata:
   version: 1.0.2
   resolution: "@wmhilton/crypto-hash@npm:1.0.2"
   checksum: 10c0/8484f90a61615ade87ffd7fc9079b0350ea9a574a9b0414542b1ce0342c47c2b2a5d711a6f95ef883ea2958985ef619957cb350cd4ff314a444910c08aeb233c
-  languageName: node
-  linkType: hard
-
-"@wso2-enterprise/choreo-cell-diagram@npm:3.2.25040205":
-  version: 3.2.25040205
-  resolution: "@wso2-enterprise/choreo-cell-diagram@npm:3.2.25040205::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40wso2-enterprise%2Fchoreo-cell-diagram%2F3.2.25040205%2F41fa029590059abb168dfcbfb68561236572108f"
-  dependencies:
-    "@emotion/react": "npm:^11.9.3"
-    "@emotion/styled": "npm:^11.10.5"
-    "@material-ui/core": "npm:^4.12.3"
-    "@mui/icons-material": "npm:~5.15.19"
-    "@mui/material": "npm:~5.13.2"
-    "@projectstorm/geometry": "npm:^6.7.4"
-    "@projectstorm/react-canvas-core": "npm:^6.7.4"
-    "@projectstorm/react-diagrams": "npm:^6.7.4"
-    "@projectstorm/react-diagrams-core": "npm:^6.7.4"
-    "@projectstorm/react-diagrams-defaults": "npm:^6.7.4"
-    "@projectstorm/react-diagrams-routing": "npm:^6.7.4"
-    "@types/lodash": "npm:^4.14.189"
-    "@types/node": "npm:^18.11.19"
-    dagre: "npm:^0.8.5"
-    gsap: "npm:~3.12.2"
-    lodash: "npm:^4.17.11"
-    react: "npm:^17.0.2"
-    react-dom: "npm:^17.0.2"
-    typescript: "npm:^4.9.4"
-  checksum: 10c0/38c26a83f56f65dbba08a30db4b9567746ee191d11f384f4ef13d30321ce0b28a44fcc001f8331c6fa68fb28f7265228d4b39954b33cf9ebf0f1a76dc4452df2
   languageName: node
   linkType: hard
 
@@ -16509,6 +16489,33 @@ __metadata:
     fsevents:
       optional: true
   checksum: 10c0/8361dcd013f2ddbe260eacb1f3cb2f2c6f2b0ad118708a343a5ed8158941a39cb8fb1d272e0f389712e74ee90ce8ba864eece9e0e62b9705cb468a2f6d917462
+  languageName: node
+  linkType: hard
+
+"choreo-cell-diagram@file:/Users/jhivan/Developer/work/vscode-extensions/workspaces/choreo/cell-diagram::locator=%40internal%2Fplugin-choreo%40workspace%3Aplugins%2Fchoreo":
+  version: 3.2.24050304
+  resolution: "choreo-cell-diagram@file:/Users/jhivan/Developer/work/vscode-extensions/workspaces/choreo/cell-diagram#/Users/jhivan/Developer/work/vscode-extensions/workspaces/choreo/cell-diagram::hash=445dff&locator=%40internal%2Fplugin-choreo%40workspace%3Aplugins%2Fchoreo"
+  dependencies:
+    "@emotion/react": "npm:^11.9.3"
+    "@emotion/styled": "npm:^11.10.5"
+    "@material-ui/core": "npm:^4.12.3"
+    "@mui/icons-material": "npm:~5.15.19"
+    "@mui/material": "npm:~5.13.2"
+    "@projectstorm/geometry": "npm:^6.7.4"
+    "@projectstorm/react-canvas-core": "npm:^6.7.4"
+    "@projectstorm/react-diagrams": "npm:^6.7.4"
+    "@projectstorm/react-diagrams-core": "npm:^6.7.4"
+    "@projectstorm/react-diagrams-defaults": "npm:^6.7.4"
+    "@projectstorm/react-diagrams-routing": "npm:^6.7.4"
+    "@types/lodash": "npm:^4.14.189"
+    "@types/node": "npm:^18.11.19"
+    dagre: "npm:^0.8.5"
+    gsap: "npm:~3.12.2"
+    lodash: "npm:^4.17.11"
+    react: "npm:^18.0.2"
+    react-dom: "npm:^18.0.2"
+    typescript: "npm:^4.9.4"
+  checksum: 10c0/e0b7e00ef8e287a4f5fc3ec91c53eebc8c839b16b9387ea561346e0631b4ed35583451ae7e821434a3495225049db0774a6b08a65fc1f559465042866ed5d7da
   languageName: node
   linkType: hard
 
@@ -28738,19 +28745,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.2":
-  version: 17.0.2
-  resolution: "react-dom@npm:17.0.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    object-assign: "npm:^4.1.1"
-    scheduler: "npm:^0.20.2"
-  peerDependencies:
-    react: 17.0.2
-  checksum: 10c0/51abbcb72450fe527ebf978c3bc989ba266630faaa53f47a2fae5392369729e8de62b2e4683598cbe651ea7873cd34ec7d5127e2f50bf4bfe6bd0c3ad9bddcb0
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:^18.0.2":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -29178,16 +29172,6 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
-  languageName: node
-  linkType: hard
-
-"react@npm:^17.0.2":
-  version: 17.0.2
-  resolution: "react@npm:17.0.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    object-assign: "npm:^4.1.1"
-  checksum: 10c0/07ae8959acf1596f0550685102fd6097d461a54a4fd46a50f88a0cd7daaa97fdd6415de1dcb4bfe0da6aa43221a6746ce380410fa848acc60f8ac41f6649c148
   languageName: node
   linkType: hard
 
@@ -30202,16 +30186,6 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10c0/3847b839f060ef3476eb8623d099aa502ad658f5c40fd60c105ebce86d244389b0d76fcae30f4d0c728d7705ceb2f7e9b34bb54717b6a7dbedaf5dad2d9a4b74
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.20.2":
-  version: 0.20.2
-  resolution: "scheduler@npm:0.20.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-    object-assign: "npm:^4.1.1"
-  checksum: 10c0/b0982e4b0f34f4ffa4f2f486161c0fd9ce9b88680b045dccbf250eb1aa4fd27413570645455187a83535e2370f5c667a251045547765408492bd883cbe95fcdb
   languageName: node
   linkType: hard
 

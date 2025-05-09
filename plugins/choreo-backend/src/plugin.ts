@@ -5,6 +5,7 @@ import {
 import { createRouter } from './router';
 import { catalogServiceRef } from '@backstage/plugin-catalog-node/alpha';
 import { EnvironmentInfoService } from './services/EnvironmentService/EnvironmentInfoService';
+import { CellDiagramInfoService } from './services/CellDiagramService/CellDiagramInfoService';
 
 /**
  * choreoPlugin backend plugin
@@ -42,16 +43,21 @@ export const choreoPlugin = createBackendPlugin({
           discovery,
         );
 
+        const cellDiagramInfoService = await CellDiagramInfoService.create(
+          logger,
+          config,
+          catalog,
+          permissions,
+          discovery,
+        );
+
         httpRouter.use(
           await createRouter({
             httpAuth,
             environmentInfoService,
+            cellDiagramInfoService,
           }),
         );
-        httpRouter.addAuthPolicy({
-          path: '/environments',
-          allow: 'unauthenticated',
-        });
       },
     });
   },

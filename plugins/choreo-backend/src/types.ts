@@ -1,3 +1,5 @@
+import { Project } from 'choreo-cell-diagram';
+
 export interface EnvironmentService {
   fetchDeploymentInfo(request: {
     projectName: string;
@@ -25,7 +27,7 @@ export type ObjectToFetch = {
   objectType: 'customresources';
 };
 
-export const choreoWorkflowTypes: ObjectToFetch[] = [
+export const environmentChoreoWorkflowTypes: ObjectToFetch[] = [
   {
     group: 'core.choreo.dev',
     apiVersion: 'v1',
@@ -45,3 +47,31 @@ export const choreoWorkflowTypes: ObjectToFetch[] = [
     objectType: 'customresources',
   },
 ];
+
+export const cellChoreoWorkflowTypes: ObjectToFetch[] = [
+  {
+    group: 'core.choreo.dev',
+    apiVersion: 'v1',
+    plural: 'projects',
+    objectType: 'customresources',
+  },
+  {
+    group: 'core.choreo.dev',
+    apiVersion: 'v1',
+    plural: 'components',
+    objectType: 'customresources',
+  },
+  {
+    group: 'core.choreo.dev',
+    apiVersion: 'v1',
+    plural: 'endpoints',
+    objectType: 'customresources',
+  },
+];
+
+export interface CellDiagramService {
+  fetchProjectInfo(request: {
+    projectName: string;
+    organizationName: string;
+  }): Promise<Project | undefined>;
+}

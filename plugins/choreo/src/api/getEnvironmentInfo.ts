@@ -1,18 +1,19 @@
 import { Entity } from '@backstage/catalog-model/index';
 import { DiscoveryApi, IdentityApi } from '@backstage/core-plugin-api';
+import { CHOREO_LABELS, API_ENDPOINTS } from '../constants';
 
-export async function fetchEnvironmentInfo(
+export async function getEnvironmentInfo(
   entity: Entity,
   discovery: DiscoveryApi,
   identity: IdentityApi,
 ) {
   const { token } = await identity.getCredentials();
   const backendUrl = new URL(
-    `${await discovery.getBaseUrl('choreo')}/environments`,
+    `${await discovery.getBaseUrl('choreo')}${API_ENDPOINTS.ENVIRONMENT_INFO}`,
   );
-  const component = entity.metadata.labels?.['core.choreo.dev/name'];
-  const project = entity.metadata.labels?.['core.choreo.dev/project'];
-  const organization = entity.metadata.labels?.['core.choreo.dev/organization'];
+  const component = entity.metadata.labels?.[CHOREO_LABELS.NAME];
+  const project = entity.metadata.labels?.[CHOREO_LABELS.PROJECT];
+  const organization = entity.metadata.labels?.[CHOREO_LABELS.ORGANIZATION];
 
   if (!project || !component || !organization) {
     return [];
@@ -27,7 +28,7 @@ export async function fetchEnvironmentInfo(
 
   const res = await fetch(backendUrl, {
     headers: {
-      Authroization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 

@@ -6,8 +6,8 @@ import {
   EnvironmentService,
   Environment,
   ObjectToFetch,
-  choreoWorkflowTypes,
-} from './types';
+  environmentChoreoWorkflowTypes,
+} from '../../types';
 import { KubernetesBuilder } from '@backstage/plugin-kubernetes-backend';
 import { Config } from '@backstage/config';
 import { CatalogApi } from '@backstage/catalog-client';
@@ -70,7 +70,7 @@ export class EnvironmentInfoService implements EnvironmentService {
     }
 
     const objectTypesToFetch: Set<ObjectToFetch> = new Set([
-      ...choreoWorkflowTypes,
+      ...environmentChoreoWorkflowTypes,
     ]);
 
     const environments: Environment[] = [];

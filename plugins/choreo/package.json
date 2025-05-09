@@ -32,7 +32,7 @@
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.61",
-    "@wso2-enterprise/choreo-cell-diagram": "3.2.25040205",
+    "choreo-cell-diagram": "file:/Users/jhivan/Developer/work/vscode-extensions/workspaces/choreo/cell-diagram",
     "pathfinding": "^0.4.18",
     "react-use": "^17.2.4"
   },

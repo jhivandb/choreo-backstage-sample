@@ -17,6 +17,10 @@ import {
   KubernetesFetcher,
   KubernetesClustersSupplier,
 } from '@backstage/plugin-kubernetes-node';
+import {
+  CHOREO_LABELS,
+  CHOREO_ANNOTATIONS,
+} from '@internal/plugin-choreo/src/constants/labels';
 
 /**
  * Service for managing and retrieving environment-related information for deployments.
@@ -116,7 +120,7 @@ export class EnvironmentInfoService implements EnvironmentService {
             // TODO Can filter by namespace instead of label
             resource =>
               resource.kind === 'Environment' &&
-              resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+              resource.metadata?.labels?.[CHOREO_LABELS.ORGANIZATION] ===
                 request.organizationName,
           );
 
@@ -125,16 +129,15 @@ export class EnvironmentInfoService implements EnvironmentService {
             .filter(response => response.type === 'customresources')
             .flatMap(response => response.resources)
             .find(
-              // TODO Move labels to constants
               resource =>
                 resource.kind === 'Deployment' &&
-                resource.metadata?.labels?.['core.choreo.dev/environment'] ===
+                resource.metadata?.labels?.[CHOREO_LABELS.ENVIRONMENT] ===
                   env.metadata.name &&
-                resource.metadata?.labels?.['core.choreo.dev/project'] ===
+                resource.metadata?.labels?.[CHOREO_LABELS.PROJECT] ===
                   request.projectName &&
-                resource.metadata?.labels?.['core.choreo.dev/component'] ===
+                resource.metadata?.labels?.[CHOREO_LABELS.COMPONENT] ===
                   request.componentName &&
-                resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+                resource.metadata?.labels?.[CHOREO_LABELS.ORGANIZATION] ===
                   request.organizationName,
             );
 
@@ -149,13 +152,13 @@ export class EnvironmentInfoService implements EnvironmentService {
             .find(
               resource =>
                 resource.kind === 'Endpoint' &&
-                resource.metadata?.labels?.['core.choreo.dev/deployment'] ===
-                  deployment.metadata?.name, // Errors when deployment is unavaibale
-            ); // TODO There are multiple endpoints
+                resource.metadata?.labels?.[CHOREO_LABELS.DEPLOYMENT] ===
+                  deployment.metadata?.name,
+            );
 
           environments.push({
             name:
-              env.metadata.annotations?.['core.choreo.dev/display-name'] ||
+              env.metadata.annotations?.[CHOREO_ANNOTATIONS.DISPLAY_NAME] ||
               env.metadata.name,
             deployment: {
               status: deployment?.status?.conditions?.some(

@@ -16,6 +16,10 @@ import {
 } from '@backstage/plugin-kubernetes-node';
 import { Project, Component } from 'choreo-cell-diagram';
 import { cellChoreoWorkflowTypes, CellDiagramService } from '../../types';
+import {
+  CHOREO_LABELS,
+  CHOREO_ANNOTATIONS,
+} from '@internal/plugin-choreo/src/constants/labels';
 
 /**
  * Service implementation for fetching and managing Cell Diagram information.
@@ -123,7 +127,7 @@ export class CellDiagramInfoService implements CellDiagramService {
             // TODO Can filter by namespace instead of label
             resource =>
               resource.kind === 'Project' &&
-              resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+              resource.metadata?.labels?.[CHOREO_LABELS.ORGANIZATION] ===
                 request.organizationName,
           )
           .find(resource => resource.metadata.name === request.projectName);
@@ -138,9 +142,9 @@ export class CellDiagramInfoService implements CellDiagramService {
           .filter(
             resource =>
               resource.kind === 'Component' &&
-              resource.metadata?.labels?.['core.choreo.dev/project'] ===
+              resource.metadata?.labels?.[CHOREO_LABELS.PROJECT] ===
                 request.projectName &&
-              resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+              resource.metadata?.labels?.[CHOREO_LABELS.ORGANIZATION] ===
                 request.organizationName,
           );
 
@@ -155,7 +159,7 @@ export class CellDiagramInfoService implements CellDiagramService {
             id: component.metadata?.uid || component.metadata?.name || '',
             label:
               component.metadata?.annotations?.[
-                'core.choreo.dev/display-name'
+                CHOREO_ANNOTATIONS.DISPLAY_NAME
               ] ||
               component.metadata?.name ||
               '',
@@ -166,7 +170,7 @@ export class CellDiagramInfoService implements CellDiagramService {
                 id: component.metadata?.name || '',
                 label:
                   component.metadata?.annotations?.[
-                    'core.choreo.dev/display-name'
+                    CHOREO_ANNOTATIONS.DISPLAY_NAME
                   ] ||
                   component.metadata?.name ||
                   '',
@@ -197,7 +201,7 @@ export class CellDiagramInfoService implements CellDiagramService {
           id: projectCrd.metadata?.uid || projectCrd.metadata?.name || '',
           name:
             projectCrd.metadata?.annotations?.[
-              'core.choreo.dev/display-name'
+              CHOREO_ANNOTATIONS.DISPLAY_NAME
             ] ||
             projectCrd.metadata?.name ||
             '',
@@ -240,11 +244,10 @@ export class CellDiagramInfoService implements CellDiagramService {
       .find(
         resource =>
           resource.kind === 'Endpoint' &&
-          resource.metadata?.labels?.['core.choreo.dev/project'] ===
-            projectName &&
-          resource.metadata?.labels?.['core.choreo.dev/organization'] ===
+          resource.metadata?.labels?.[CHOREO_LABELS.PROJECT] === projectName &&
+          resource.metadata?.labels?.[CHOREO_LABELS.ORGANIZATION] ===
             organizationName &&
-          resource.metadata?.labels?.['core.choreo.dev/component'] ===
+          resource.metadata?.labels?.[CHOREO_LABELS.COMPONENT] ===
             componentName, // TODO this will find any endpoint not considering environment
       );
 
